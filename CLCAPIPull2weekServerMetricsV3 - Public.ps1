@@ -235,6 +235,7 @@ Foreach ($group in $groups)
 
   Write-Verbose "Calculating server metrics for $countdate for $AccountAlias." -Verbose
   
+  $allServers = $theserows.Count
   $allCPU = $theserows.CPUAmount | Measure-Object -Sum
   $allCPU = $allCPU.sum
   $allRAM = $theserows.MemoryMB | Measure-Object -Sum
@@ -255,6 +256,7 @@ Foreach ($group in $groups)
 
   $thisrow = New-object system.object
   $thisrow | Add-Member -MemberType NoteProperty -Name "Date" -value $countDate
+  $thisrow | Add-Member -MemberType NoteProperty -Name "Server Count" -value $allServers
   $thisrow | Add-Member -MemberType NoteProperty -Name "Allocated CPUs" -value $allCPU
   $thisrow | Add-Member -MemberType NoteProperty -Name "CPU Utilization %" -value $averageCPU
   $thisrow | Add-Member -MemberType NoteProperty -Name "Allocated RAM in GB" -value $allRAM
